@@ -9,11 +9,11 @@ namespace TrueMarbleData
     {
         public TMDataControllerImpl()
         {
-            Console.WriteLine("Hello");
+            Console.WriteLine("A connection was made!");
         }
 
         ~TMDataControllerImpl() {
-            Console.WriteLine("Bye");
+            Console.WriteLine("Disconnected...");
         }
 
         public int get_tile_width() {
@@ -40,13 +40,13 @@ namespace TrueMarbleData
             return num_tile_y;
         }
 
-        public byte[] load_tile(int zoom, int x, int y) {
+        public byte[] load_tile(int zoom, int x, int y, out int code) {
             int buff_size;
             byte[] byte_buff;
 
             buff_size = x * y * 3;
             byte_buff = new byte[buff_size];
-            TrueMarble.GetTileImageAsRawJPG(zoom, x, y, out byte_buff, buff_size, out int jpg_size);
+            code = TrueMarble.GetTileImageAsRawJPG(zoom, x, y, out byte_buff, buff_size, out int jpg_size);
 
             return byte_buff;
         }

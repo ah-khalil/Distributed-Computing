@@ -2,7 +2,7 @@
 using System.Threading;
 using System.ServiceModel;
 
-namespace TrueMarbleData
+namespace TrueMarbleBiz
 {
     class MainClass
     {
@@ -16,8 +16,8 @@ namespace TrueMarbleData
             tcp_binding.MaxReceivedMessageSize = System.Int32.MaxValue;
             tcp_binding.ReaderQuotas.MaxArrayLength = System.Int32.MaxValue;
 
-            host = new ServiceHost(typeof(TMDataControllerImpl));
-            host.AddServiceEndpoint(typeof(ITMDataController), tcp_binding, "net.tcp://localhost:50001/TMData");
+            host = new ServiceHost(typeof(TMBizControllerImpl));
+            host.AddServiceEndpoint(typeof(ITMBizController), tcp_binding, "net.tcp://localhost:50002/TMBiz");
             host.Open();
 
             Console.WriteLine("Initialized");

@@ -60,6 +60,9 @@
       <HintPath>..\..\TrueMarbleData\bin\Debug\TrueMarbleData.exe</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="TrueMarbleBiz">
+      <HintPath>..\..\TrueMarbleBiz\TrueMarbleBiz\bin\Debug\TrueMarbleBiz.exe</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

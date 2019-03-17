@@ -5,7 +5,11 @@ public partial class MainWindow
 {
 	private global::Gtk.VBox vbox4;
 
+	private global::Gtk.HBox hbox1;
+
 	private global::Gtk.HScale zoom_scale;
+
+	private global::Gtk.Button button1;
 
 	private global::Gtk.HBox hbox2;
 
@@ -33,6 +37,10 @@ public partial class MainWindow
 		this.vbox4.Name = "vbox4";
 		this.vbox4.Spacing = 1;
 		// Container child vbox4.Gtk.Box+BoxChild
+		this.hbox1 = new global::Gtk.HBox();
+		this.hbox1.Name = "hbox1";
+		this.hbox1.Spacing = 6;
+		// Container child hbox1.Gtk.Box+BoxChild
 		this.zoom_scale = new global::Gtk.HScale(null);
 		this.zoom_scale.CanFocus = true;
 		this.zoom_scale.Name = "zoom_scale";
@@ -44,11 +52,25 @@ public partial class MainWindow
 		this.zoom_scale.DrawValue = true;
 		this.zoom_scale.Digits = 0;
 		this.zoom_scale.ValuePos = ((global::Gtk.PositionType)(2));
-		this.vbox4.Add(this.zoom_scale);
-		global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.zoom_scale]));
+		this.hbox1.Add(this.zoom_scale);
+		global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.zoom_scale]));
 		w1.Position = 0;
-		w1.Expand = false;
-		w1.Fill = false;
+		// Container child hbox1.Gtk.Box+BoxChild
+		this.button1 = new global::Gtk.Button();
+		this.button1.CanFocus = true;
+		this.button1.Name = "button1";
+		this.button1.UseUnderline = true;
+		this.button1.Label = global::Mono.Unix.Catalog.GetString("Verify Tiles");
+		this.hbox1.Add(this.button1);
+		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.button1]));
+		w2.Position = 1;
+		w2.Expand = false;
+		w2.Fill = false;
+		this.vbox4.Add(this.hbox1);
+		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.hbox1]));
+		w3.Position = 0;
+		w3.Expand = false;
+		w3.Fill = false;
 		// Container child vbox4.Gtk.Box+BoxChild
 		this.hbox2 = new global::Gtk.HBox();
 		this.hbox2.Name = "hbox2";
@@ -57,14 +79,14 @@ public partial class MainWindow
 		this.x_dec.CanFocus = true;
 		this.x_dec.Name = "x_dec";
 		this.x_dec.UseUnderline = true;
-		global::Gtk.Image w2 = new global::Gtk.Image();
-		w2.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-go-back", global::Gtk.IconSize.Menu);
-		this.x_dec.Image = w2;
+		global::Gtk.Image w4 = new global::Gtk.Image();
+		w4.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-go-back", global::Gtk.IconSize.Menu);
+		this.x_dec.Image = w4;
 		this.hbox2.Add(this.x_dec);
-		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.x_dec]));
-		w3.Position = 0;
-		w3.Expand = false;
-		w3.Fill = false;
+		global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.x_dec]));
+		w5.Position = 0;
+		w5.Expand = false;
+		w5.Fill = false;
 		// Container child hbox2.Gtk.Box+BoxChild
 		this.vbox5 = new global::Gtk.VBox();
 		this.vbox5.Name = "vbox5";
@@ -75,52 +97,52 @@ public partial class MainWindow
 		this.y_inc.ExtensionEvents = ((global::Gdk.ExtensionMode)(1));
 		this.y_inc.Name = "y_inc";
 		this.y_inc.UseUnderline = true;
-		global::Gtk.Image w4 = new global::Gtk.Image();
-		w4.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-go-up", global::Gtk.IconSize.Menu);
-		this.y_inc.Image = w4;
+		global::Gtk.Image w6 = new global::Gtk.Image();
+		w6.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-go-up", global::Gtk.IconSize.Menu);
+		this.y_inc.Image = w6;
 		this.vbox5.Add(this.y_inc);
-		global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.y_inc]));
-		w5.Position = 0;
-		w5.Expand = false;
-		w5.Fill = false;
+		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.y_inc]));
+		w7.Position = 0;
+		w7.Expand = false;
+		w7.Fill = false;
 		// Container child vbox5.Gtk.Box+BoxChild
 		this.img_view = new global::Gtk.Image();
 		this.img_view.Name = "img_view";
 		this.vbox5.Add(this.img_view);
-		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.img_view]));
-		w6.Position = 1;
+		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.img_view]));
+		w8.Position = 1;
 		// Container child vbox5.Gtk.Box+BoxChild
 		this.y_dec = new global::Gtk.Button();
 		this.y_dec.CanFocus = true;
 		this.y_dec.Name = "y_dec";
 		this.y_dec.UseUnderline = true;
-		global::Gtk.Image w7 = new global::Gtk.Image();
-		w7.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-go-down", global::Gtk.IconSize.Menu);
-		this.y_dec.Image = w7;
+		global::Gtk.Image w9 = new global::Gtk.Image();
+		w9.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-go-down", global::Gtk.IconSize.Menu);
+		this.y_dec.Image = w9;
 		this.vbox5.Add(this.y_dec);
-		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.y_dec]));
-		w8.Position = 2;
-		w8.Expand = false;
-		w8.Fill = false;
+		global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.y_dec]));
+		w10.Position = 2;
+		w10.Expand = false;
+		w10.Fill = false;
 		this.hbox2.Add(this.vbox5);
-		global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.vbox5]));
-		w9.Position = 1;
+		global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.vbox5]));
+		w11.Position = 1;
 		// Container child hbox2.Gtk.Box+BoxChild
 		this.x_inc = new global::Gtk.Button();
 		this.x_inc.CanFocus = true;
 		this.x_inc.Name = "x_inc";
 		this.x_inc.UseUnderline = true;
-		global::Gtk.Image w10 = new global::Gtk.Image();
-		w10.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-go-forward", global::Gtk.IconSize.Menu);
-		this.x_inc.Image = w10;
+		global::Gtk.Image w12 = new global::Gtk.Image();
+		w12.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-go-forward", global::Gtk.IconSize.Menu);
+		this.x_inc.Image = w12;
 		this.hbox2.Add(this.x_inc);
-		global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.x_inc]));
-		w11.Position = 2;
-		w11.Expand = false;
-		w11.Fill = false;
+		global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.x_inc]));
+		w13.Position = 2;
+		w13.Expand = false;
+		w13.Fill = false;
 		this.vbox4.Add(this.hbox2);
-		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.hbox2]));
-		w12.Position = 1;
+		global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.hbox2]));
+		w14.Position = 1;
 		this.Add(this.vbox4);
 		if ((this.Child != null))
 		{
@@ -131,6 +153,7 @@ public partial class MainWindow
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 		this.zoom_scale.ValueChanged += new global::System.EventHandler(this.on_zoom_changed);
+		this.button1.Clicked += new global::System.EventHandler(this.verify);
 		this.x_dec.Clicked += new global::System.EventHandler(this.on_x_dec_clicked);
 		this.y_inc.Clicked += new global::System.EventHandler(this.on_y_inc_pressed);
 		this.y_dec.Clicked += new global::System.EventHandler(this.on_y_dec_clicked);

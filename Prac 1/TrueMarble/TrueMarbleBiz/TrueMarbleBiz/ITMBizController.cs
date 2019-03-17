@@ -1,9 +1,9 @@
 ﻿using System.ServiceModel;
 
-namespace TrueMarbleData
+namespace TrueMarbleBiz
 {
     [ServiceContract]
-    public interface ITMDataController
+    public interface ITMBizController
     {
         [OperationContract]
         int get_tile_width();
@@ -19,5 +19,8 @@ namespace TrueMarbleData
 
         [OperationContract]
         byte[] load_tile(int zoom, int x, int y, out int code);
+
+        [OperationContract]
+        bool verify_tiles();
     }
 }
