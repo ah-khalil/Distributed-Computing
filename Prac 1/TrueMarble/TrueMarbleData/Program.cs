@@ -16,8 +16,7 @@ namespace TrueMarbleData
             tcp_binding.ReaderQuotas.MaxArrayLength = System.Int32.MaxValue;
 
             host = new ServiceHost(typeof(TMDataControllerImpl));
-            host.AddServiceEndpoint(typeof(TMDataControllerImpl), tcp_binding,
-            "net.tcp://localhost:50001/TMData");
+            host.AddServiceEndpoint(typeof(ITMDataController), tcp_binding, "net.tcp://localhost:50001/TMData");
             host.Open();
 
             Console.WriteLine("Yeet!");

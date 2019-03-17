@@ -130,7 +130,6 @@ public partial class MainWindow
 		this.DefaultHeight = 468;
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
-		this.zoom_scale.MoveSlider += new global::Gtk.MoveSliderHandler(this.on_zoom_changed);
 		this.zoom_scale.ValueChanged += new global::System.EventHandler(this.on_zoom_changed);
 		this.x_dec.Clicked += new global::System.EventHandler(this.on_x_dec_clicked);
 		this.y_inc.Clicked += new global::System.EventHandler(this.on_y_inc_pressed);

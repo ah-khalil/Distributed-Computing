@@ -4,18 +4,16 @@ using System.ServiceModel;
 
 namespace TrueMarbleData
 {
-    [ServiceBehavior(ConcurrencyMode=ConcurrencyMode.Multiple, 
-        UseSynchronizationContext=false, 
-        InstanceContextMode=InstanceContextMode.Single)]
+    [ServiceBehavior(ConcurrencyMode=ConcurrencyMode.Multiple, UseSynchronizationContext=false, InstanceContextMode=InstanceContextMode.Single)]
     internal class TMDataControllerImpl : ITMDataController
     {
         public TMDataControllerImpl()
         {
-            Console.WriteLine("Hey Nigger");
+            Console.WriteLine("Hello");
         }
 
         ~TMDataControllerImpl() {
-            Console.WriteLine("Bye Nigger");
+            Console.WriteLine("Bye");
         }
 
         public int get_tile_width() {

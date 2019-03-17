@@ -4,6 +4,7 @@
     <images-root-path>..</images-root-path>
   </configuration>
   <import>
+    <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/TrueMarbleGUI.exe" internal="true" />
     <widget-library name="../bin/Debug/TrueMarbleGUI.exe" internal="true" />
   </import>
@@ -28,7 +29,6 @@
             <property name="DrawValue">True</property>
             <property name="Digits">0</property>
             <property name="ValuePos">Top</property>
-            <signal name="MoveSlider" handler="on_zoom_changed" after="yes" />
             <signal name="ValueChanged" handler="on_zoom_changed" />
           </widget>
           <packing>
