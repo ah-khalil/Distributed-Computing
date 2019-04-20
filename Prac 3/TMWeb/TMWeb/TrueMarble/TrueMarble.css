@@ -1,0 +1,48 @@
+﻿.content {
+    width:50%;
+    text-align:center;
+}
+
+.top-container{
+    padding-bottom:20px;
+}
+
+.map-container{
+    height:100%;
+    width:50%;
+    margin-left:25%;
+}
+
+.center-col{
+    width:100%;
+}
+
+.map-cls{
+    padding:10px;
+}
+
+#input_range {
+    width:100%;
+}
+
+#verify_tiles_button{
+    width:100%;
+}
+
+#move_up_button{
+    width:75%;
+}
+
+#move_down_button{
+    width:75%;
+}
+
+#move_left_button{
+    float:left;
+    height:250px;
+}
+
+#move_right_button{
+    float:right;
+    height:250px;
+}
