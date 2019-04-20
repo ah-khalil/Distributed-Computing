@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.ServiceModel;
@@ -90,11 +91,7 @@ namespace TrueMarbleBiz
             byte[] img_buff = null;
             code = 0;
 
-            try {
-                img_buff = m_tm_data.load_tile(zoom, x, y, out code);
-            } catch (Exception) {
-                //Do Something
-            }
+            img_buff = m_tm_data.load_tile(zoom, x, y, out code);
 
             return img_buff;
         }
@@ -105,33 +102,37 @@ namespace TrueMarbleBiz
 
             invalid_coord_list = new List<Coords>();
 
-            Console.WriteLine("Nigger");
-
-            for (int i = 0; i < ZOOM_LEVEL_MAX; i++) {
+            for (int i = 0; i < ZOOM_LEVEL_MAX; i++)
+            {
                 num_tiles_down = get_num_tiles_down(i);
                 num_tiles_across = get_num_tiles_across(i);
 
-                for (int x = 0; i < num_tiles_across; x++) {
-                    for (int y = 0; y < num_tiles_down; y++) {
-                        try {
-                            load_tile(i, x, y, out int code);
-                        
-                            if (code == 0) {
-                                invalid_coord_list.Add(new Coords(x, y, i));
-                            } else
-                                Console.WriteLine("Verified -> X: " + x + "Y: " + y);
+                for (int x = 0; x < num_tiles_across; x++)
+                {
+                    for (int y = 0; y < num_tiles_down; y++)
+                    {
+                        load_tile(i, x, y, out int code);
+
+                        if (code == 0)
+                        {
+                            invalid_coord_list.Add(new Coords(x, y, i));
                         }
-                        catch (Exception) { 
-                            //Do Something
-                        }
+                        else
+                            Console.WriteLine("Verified -> X: " + x + "Y: " + y);
                     }
                 }
             }
 
             Console.WriteLine("Invalid Coordinates: ");
 
-            foreach (Coords coord in invalid_coord_list) {
-                Console.WriteLine(coord.to_string());
+            if (invalid_coord_list.Count > 0) {
+                foreach (Coords coord in invalid_coord_list)
+                {
+                    Console.WriteLine(coord.to_string());
+                }
+            }
+            else {
+                Console.WriteLine("No Invalid Coordinates!");
             }
 
             return !(invalid_coord_list.Count > 0);
