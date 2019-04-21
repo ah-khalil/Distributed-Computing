@@ -5,13 +5,86 @@
     <meta charset="utf-8" />
     <title>True Marble</title>
 </head>
-<body>
+<body onload="init();">
+    <script language="JavaScript" type="text/JavaScript">
+        var max_x, max_y;
+
+        function init(){
+            var req_xhr_zoom;
+            
+            max_x = 0;
+            max_y = 0;
+            
+            req_xhr_zoom = new XMLHttpRequest();
+            req_xhr_zoom.onreadystatechange = get_zoom_levels;
+            req_xhr_zoom.open("GET", "TMWeb/Zoom", true);
+            req_xhr_zoom.send();
+        }
+
+        function get_zoom_levels(){
+            var ret_val;
+            var med_val;
+            var select_elem;
+            var curr_x_val, curr_y_val;
+            var req_xhr_img, req_xhr_max_xy;
+        
+            if(this.readyState == 4 && this.status == 200){
+                med_val = 0;
+                ret_val = JSON.parse(this.responseText);
+                select_elem = document.getElementById("zoom_select");
+                
+                for(var i = 0; i < ret_val; i++){
+                    select_elem.option[i] = new Option(i + 1);
+                    med_val += i;
+                }
+
+                select_elem.value = med_val = parseInt((med_val + 1)/2);
+                
+                curr_x_val = document.getElementById("x_container_hidden").value;
+                curr_y_val = document.getElementById("y_container_hidden").value;
+                
+                req_xhr_img = new XMLHttpRequest();
+                req_xhr_max_xy = new XMLHttpRequest();
+                req_xhr_img.onreadystatechange = get_image;
+                req_xhr_max_xy.onreadstatechange = set_max_xy;
+
+                req_xhr_img.open("GET", "/TMWeb/" + med_val + "/" + curr_x_val + "/" + curr_y_val, true);
+                req_xhr_max_xy.open("GET", "TMWeb/zoom/" + med_val);
+            
+                req_xhr_img.send();
+                req_xhr_max_xy.send();
+            }
+        }
+
+        function get_image(){
+            var ret_val;
+            var img_elem;
+        
+            if(this.readyState == 4 && this.status == 200){
+                ret_val = JSON.parse(this.reponseText);
+                img_elem = document.getElementById("map_img");
+                img_elem.setAttribute("src", "data : image/png;base64, " + ret_val);
+            }
+        }
+            
+        function set_max_xy(){
+            var ret_val;
+            
+            if(this.readyState == 4 && this.status == 200){
+                ret_val = JSON.parse(this.responseText);
+                max_x = ret_val["across"];
+                max_y = ret_val["down"];
+            }
+        }
+    </script>
+
+    <input type="hidden" id="y_container_hidden" value="0">
+    <input type="hidden" id="x_container_hidden" value="0">
+
     <div class="content">
         <div class="top-container">
-            <input type="range" min="1" max="6" value="4" class="slider" id="input_range">
-            <button class="btn-cls" id="verify_tiles_button">
-                Verify Tiles
-            </button>
+            <select id="zoom_select"></select>
+            <button class="btn-cls" id="verify_tiles_button">Verify Tiles</button>
         </div>
         <div class="map-container">
             <div class="upper-col">
@@ -23,7 +96,7 @@
                 <button class="btn-cls" id="move_left_button">
                     <b> &#x02190; </b>
                 </button>
-                <img class="map-cls" src="../Resources/LoremIpsum.jpeg">
+                <img class="map-cls" src="LoremIpsum.jpeg" id="map_img">
                 <button class="btn-cls" id="move_right_button">
                     <b> &#x02192; </b>
                 </button>
