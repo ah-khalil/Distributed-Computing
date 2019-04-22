@@ -17,11 +17,12 @@
             
             req_xhr_zoom = new XMLHttpRequest();
             req_xhr_zoom.onreadystatechange = get_zoom_levels;
-            req_xhr_zoom.open("GET", "TMWeb/Zoom", true);
+            req_xhr_zoom.open("GET", "/TMWeb/Zoom", true);
             req_xhr_zoom.send();
         }
 
         function get_zoom_levels(){
+            var option;
             var ret_val;
             var med_val;
             var select_elem;
@@ -31,29 +32,44 @@
             if(this.readyState == 4 && this.status == 200){
                 med_val = 0;
                 ret_val = JSON.parse(this.responseText);
+                
+                console.log(ret_val);
+            
                 select_elem = document.getElementById("zoom_select");
                 
                 for(var i = 0; i < ret_val; i++){
-                    select_elem.option[i] = new Option(i + 1);
-                    med_val += i;
+                    option = document.createElement("option");
+                    option.value = i + 1;
+                    option.innerHTML = i + 1;
+                    select_elem.add(option, select_elem[i]);                    
                 }
-
-                select_elem.value = med_val = parseInt((med_val + 1)/2);
+                
+                med_val = parseInt((ret_val + 1)/ 2);
+                select_elem.value = med_val;
                 
                 curr_x_val = document.getElementById("x_container_hidden").value;
                 curr_y_val = document.getElementById("y_container_hidden").value;
-                
-                req_xhr_img = new XMLHttpRequest();
-                req_xhr_max_xy = new XMLHttpRequest();
-                req_xhr_img.onreadystatechange = get_image;
-                req_xhr_max_xy.onreadstatechange = set_max_xy;
-
-                req_xhr_img.open("GET", "/TMWeb/" + med_val + "/" + curr_x_val + "/" + curr_y_val, true);
-                req_xhr_max_xy.open("GET", "TMWeb/zoom/" + med_val);
             
-                req_xhr_img.send();
-                req_xhr_max_xy.send();
+                console.log("Med Val: " + med_val);
+                console.log("Current X Value: " + curr_x_val);
+                console.log("Current Y Value: " + curr_y_val);
+            
+                update_image(med_val, curr_x_val, curr_y_val);
             }
+        }
+            
+        function update_image(zoom_level, x_val, y_val){
+            req_xhr_img = new XMLHttpRequest();
+            req_xhr_max_xy = new XMLHttpRequest();
+        
+            req_xhr_img.onreadystatechange = get_image;
+            req_xhr_max_xy.onreadystatechange = set_max_xy;
+
+            req_xhr_img.open("GET", "/TMWeb/" + zoom_level + "/" + x_val + "/" + y_val, true);
+            req_xhr_max_xy.open("GET", "/TMWeb/zoom/" + zoom_level, true);
+        
+            req_xhr_img.send();
+            req_xhr_max_xy.send();
         }
 
         function get_image(){
@@ -61,12 +77,14 @@
             var img_elem;
         
             if(this.readyState == 4 && this.status == 200){
-                ret_val = JSON.parse(this.reponseText);
+                console.log(this.responseText);
+            
+                ret_val = JSON.parse(this.responseText);
                 img_elem = document.getElementById("map_img");
-                img_elem.setAttribute("src", "data : image/png;base64, " + ret_val);
+                img_elem.setAttribute("src", "data:image/jpg;base64, " + ret_val);
             }
         }
-            
+
         function set_max_xy(){
             var ret_val;
             
@@ -74,7 +92,30 @@
                 ret_val = JSON.parse(this.responseText);
                 max_x = ret_val["across"];
                 max_y = ret_val["down"];
+                
+                console.log("Max X: " + max_x);
+                console.log("Max Y: " + max_y)
             }
+        }
+            
+        function update_zoom_level(){
+            var curr_zoom, curr_x_val, curr_y_val;
+            
+            curr_zoom = document.getElementById("zoom_select").value;
+            curr_x_val = document.getElementById("x_container_hidden").value;
+            curr_y_val = document.getElementById("y_container_hidden").value;
+
+            if (curr_x_val > max_x - 1)
+                curr_x_val = (max_x - 1) / 2;
+            else if (curr_x_val < 0)
+                curr_x_val = 0;
+
+            if (curr_y_val > max_y - 1)
+                curr_y_val = (max_y - 1) / 2;
+            else if (curr_y_val < 0)
+                curr_y_val = 0;
+            
+            update_image(curr_zoom, curr_x_val, curr_y_val);
         }
     </script>
 
@@ -83,7 +124,7 @@
 
     <div class="content">
         <div class="top-container">
-            <select id="zoom_select"></select>
+            <select id="zoom_select" onchange="update_zoom_level();"></select>
             <button class="btn-cls" id="verify_tiles_button">Verify Tiles</button>
         </div>
         <div class="map-container">
@@ -96,7 +137,7 @@
                 <button class="btn-cls" id="move_left_button">
                     <b> &#x02190; </b>
                 </button>
-                <img class="map-cls" src="LoremIpsum.jpeg" id="map_img">
+                <img class="map-cls" src="" id="map_img">
                 <button class="btn-cls" id="move_right_button">
                     <b> &#x02192; </b>
                 </button>

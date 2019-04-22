@@ -52,6 +52,15 @@
     <Reference Include="System.Web.Http.WebHost">
       <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Cors">
+      <HintPath>packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="TrueMarbleLibrary">
+      <HintPath>bin\TrueMarbleLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
@@ -71,6 +80,9 @@
     <Folder Include="Controllers\" />
     <Folder Include="Resources\" />
     <Folder Include="TrueMarble\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LoremIpsum.jpeg" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

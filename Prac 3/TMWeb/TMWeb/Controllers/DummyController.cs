@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Web.Http;
+using TrueMarbleLibrary;
+//using System.Web.Http.Cors;
 using System.Collections.Generic;
 
 namespace TMWeb.Controllers
 {
     public class DummyController : ApiController
     {
-
         /* Fuction: getImage
          * Type: Get
          * Parameters: zoom level, x coordinate, y coordinate
@@ -17,8 +18,7 @@ namespace TMWeb.Controllers
         [Route("TMWeb/{zoom}/{x}/{y}")]
         public byte[] Get(int zoom, int x, int y)
         {
-            byte[] imageBuf = System.IO.File.ReadAllBytes("Resources/LoremIpsum.jpg");
-            return imageBuf;
+            return load_tile(zoom, x, y, out int code);
         }
 
         /* Fuction: getImage
@@ -32,7 +32,7 @@ namespace TMWeb.Controllers
         [Route("TMWeb")]
         public byte[] Post([FromBody]Dictionary<string, object> req)
         {
-            byte[] imageBuf = System.IO.File.ReadAllBytes("Resources/LoremIpsum.jpg");
+            byte[] imageBuf = System.IO.File.ReadAllBytes("Resources/LoremIpsum.jpeg");
             return imageBuf;
         }
 
@@ -63,11 +63,37 @@ namespace TMWeb.Controllers
         {
             Dictionary<string, int> ret = new Dictionary<string, int>
             {
-                { "across", 1 },
-                { "down", 1 }
+                { "across", get_num_tiles_across(zoom) },
+                { "down", get_num_tiles_down(zoom) }
             };
 
             return ret;
+        }
+
+        public int get_num_tiles_across(int zoom)
+        {
+            TrueMarble.GetNumTiles(zoom, out int num_tile_x, out int num_tile_y);
+
+            return num_tile_x;
+        }
+
+        public int get_num_tiles_down(int zoom)
+        {
+            TrueMarble.GetNumTiles(zoom, out int num_tile_x, out int num_tile_y);
+
+            return num_tile_y;
+        }
+
+        public byte[] load_tile(int zoom, int x, int y, out int code)
+        {
+            int buff_size;
+            byte[] byte_buff;
+
+            buff_size = x * y * 3;
+            byte_buff = new byte[buff_size];
+            code = TrueMarble.GetTileImageAsRawJPG(zoom, x, y, out byte_buff, buff_size, out int jpg_size);
+
+            return byte_buff;
         }
     }
 }

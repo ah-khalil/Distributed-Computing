@@ -332,6 +332,7 @@ ASALocalRun/
 # Image Files
 .jpg
 .bmp
+.png
 
 # Image Directories
 */Tiles/*
