@@ -19,7 +19,6 @@ namespace TMWeb
 
             // DO NOT REMOVE THIS LINE
             config.MapHttpAttributeRoutes();
-            //config.EnableCors();
             // avoid convention - based routing , hence commented out
             // config . Routes . MapHttpRoute (
             // name : " DefaultApi " ,

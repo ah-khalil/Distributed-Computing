@@ -68,6 +68,7 @@
     <Content Include="TrueMarble\TrueMarble.html" />
     <Content Include="TrueMarble\TrueMarble.css" />
     <Content Include="packages.config" />
+    <Content Include="TrueMarble\TrueMarble.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
