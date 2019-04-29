@@ -75,7 +75,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\DummyController.cs" />
+    <Compile Include="Controllers\TrueMarbleController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />

@@ -13,6 +13,7 @@ function init(){
 
 function init_zoom_levels(){
     var option;
+    var json_msg;
     var select_elem;
     var req_xhr_img;
     var ret_val, med_val;
@@ -35,10 +36,21 @@ function init_zoom_levels(){
         curr_x_val = document.getElementById("x_container_hidden").value;
         curr_y_val = document.getElementById("y_container_hidden").value;
         
+        json_msg = {
+            "x_val" : curr_x_val,
+            "y_val" : curr_y_val,
+            "zoom_level" : med_val
+        };
+        
         req_xhr_img = new XMLHttpRequest();
+        req_xhr_img.open("POST", "/TMWeb/", true);
         req_xhr_img.onreadystatechange = init_image;
-        req_xhr_img.open("GET", "/TMWeb/" + med_val + "/" + curr_x_val + "/" + curr_y_val, true);
-        req_xhr_img.send();
+        req_xhr_img.setRequestHeader("Content-type", "application/json");
+        req_xhr_img.setRequestHeader("Response-type", "application/json");
+        req_xhr_img.send(JSON.stringify(json_msg));
+        
+        //req_xhr_img.open("GET", "/TMWeb/" + med_val + "/" + curr_x_val + "/" + curr_y_val, true);
+        //req_xhr_img.send();
     }
 }
 
@@ -81,6 +93,7 @@ function init_max_xy(){
 }
     
 function update_image(zoom_level, x_val, y_val){
+    var json_msg;
     var req_xhr_img;
     
     req_xhr_img = new XMLHttpRequest();
@@ -93,9 +106,20 @@ function update_image(zoom_level, x_val, y_val){
             img_elem.setAttribute("src", "data:image/jpg;base64, " + ret_val);
         }
     }
-
-    req_xhr_img.open("GET", "/TMWeb/" + zoom_level + "/" + x_val + "/" + y_val, true);
-    req_xhr_img.send();
+    
+    json_msg = {
+        "x_val" : x_val,
+        "y_val" : y_val,
+        "zoom_level" : zoom_level
+    };
+    
+    req_xhr_img.open("POST", "/TMWeb/", true);
+    req_xhr_img.setRequestHeader("Content-type", "application/json");
+    req_xhr_img.setRequestHeader("Response-type", "application/json");
+    req_xhr_img.send(JSON.stringify(json_msg));
+    
+    //req_xhr_img.open("GET", "/TMWeb/" + zoom_level + "/" + x_val + "/" + y_val, true);
+    //req_xhr_img.send();
 }
 
 function set_max_xy(zoom_level){
