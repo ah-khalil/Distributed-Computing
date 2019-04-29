@@ -31,6 +31,9 @@ namespace TMWeb.Controllers
                 zoom_level = Int32.Parse(req["zoom_level"].ToString());
 
                 ret_arr = load_tile(zoom_level, x_val, y_val, out int code);
+
+                if (code < 0)
+                    throw new Exception();
             }
             catch (Exception e) {
                 throw new HttpResponseException(this.Request.CreateResponse<object>(System.Net.HttpStatusCode.InternalServerError, "Error occurred : " + e.Message));
