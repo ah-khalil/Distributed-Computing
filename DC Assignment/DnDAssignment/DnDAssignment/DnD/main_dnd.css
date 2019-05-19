@@ -1,0 +1,41 @@
+#menu-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#view-all-menu-container{
+    /*flex: auto;*/
+    border: solid red 1px;
+    
+}
+
+#view-character-menu-container{
+    border: solid blue 1px;
+}
+
+#create-menu-container{
+    border: solid green 1px;
+}
+
+#character-container{
+    /*max-height:350px;*/
+}
+
+#character-vc-container-table{
+    width: 100%;
+}
+
+/*#ability-score-tr{*/
+    /*float: left;*/
+/*}*/
+
+.btn-container{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.or-p{
+    margin: 10px;
+}
