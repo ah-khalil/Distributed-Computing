@@ -1,93 +1,132 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Net.Mime;
 using System.Web.Http;
 using Mono.Data.Sqlite;
+using Newtonsoft.Json;
 
 namespace DnDAssignment
 {
     public static class WebApiConfig
     {
-        private const string DB_NAME = "dnd_database.sqlite";
-        private const string DB_CONN_STR = "DataSource=" + DB_NAME + ";Version=3;";
+        private const string DB_NAME = "C:/Users/Haytham/Documents/Computing/DC/Distributed-Computing/Assignment/DnDAssignment/dnd_database.sqlite";
+        public const string DB_CONN_STR = "Data Source=" + DB_NAME + ";Version=3;";
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-
-            // Web API routes
             config.MapHttpAttributeRoutes();
-
-//            config.Routes.MapHttpRoute(
-//                name: "DefaultApi",
-//                routeTemplate: "api/{controller}/{id}",
-//                defaults: new { id = RouteParameter.Optional }
-//            );
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
             config.Formatters.Insert(0, new System.Net.Http.Formatting.JsonMediaTypeFormatter());
-            // Apply this GLOBALLY so that we don 't have to be bothered with it during other JSON operations
-
+    
+            /*Setting default JSON Serialize settings so that each call can apply the defaults without additional parameter input*/
             Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings {
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                Formatting = Newtonsoft.Json.Formatting.None,
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
+                StringEscapeHandling = StringEscapeHandling.EscapeHtml
             };
 
-            /* If we don 't do this then JSON will send dates in a local - time
-            format that is not consistently interpreted by Chrome and IE
-            ( the default format misses defining the timezone , so it is USELESS .
-            This one will always be UTC )*/
+            /*Set JSON time handling to utilize UTC so that it is comprehensible to some browsers*/
             config.Formatters.JsonFormatter.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
             
             database_init();
-            
         }
-
+        
+        /*
+         * Purpose: Initializes the database and creates the character table after check to see if it already exists
+         * Params: None
+         * Return: None
+         */
         private static void database_init()
-        {
-            create_database();
-            database_connect();
-            create_character_table();
-        }
-
-        private static void create_database()
-        {
-            try
-            {
-                if (!File.Exists(DB_NAME))
-                {
-                    SqliteConnection.CreateFile(DB_NAME);
-                }
-            }
-            catch (SqliteException sql_e)
-            {
-                //Exception handling here
-            }
-        }
-
-        private static void database_connect()
-        {
-            SqliteConnection db_conn;
-            
-            db_conn = new SqliteConnection(DB_CONN_STR);
-            db_conn.Open();
-        }
-
-        private static void create_character_table()
         {
             SqliteCommand command = null;
             string character_tbl_sql = "";
 
             try
             {
+                //check if file already exists
+                if (!File.Exists(DB_NAME))
+                {
+                    //if not, create it
+                    SqliteConnection.CreateFile(DB_NAME);
+                }
+                
                 using (SqliteConnection db_conn = new SqliteConnection(DB_CONN_STR))
                 {
-                    character_tbl_sql =
-                        "CREATE TABLE characters (name VARCHAR(SQLITE_MAX_LENGTH) NOT NULL, age INT, gender VARCHAR(SQLITE_MAX_LENGTH), biography VARCHAR(SQLITE_MAX_LENGTH), level INT, race INT, class INT, spellcaster INT, hit_points INT, ab_constitution INT, ab_dexterity INT, ab_strength INT, ab_charisma INT, ab_intelligence INT, ab_wisdom INT)";
-                    command = new SqliteCommand(character_tbl_sql, db_conn);
-                    command.ExecuteNonQuery();
+                    //open a connection with the sqlite file
+                    db_conn.Open();
+                    
+                    //if the characters table doesnt exist then create it
+                    if (!check_table(db_conn, "characters"))
+                    {
+                        character_tbl_sql =
+                            @"CREATE TABLE characters(
+                              ID INTEGER PRIMARY KEY,
+                              name VARCHAR(255) UNIQUE,
+                              age INT,
+                              gender VARCHAR(255),
+                              biography VARCHAR(500),
+                              level INT,
+                              race VARCHAR(255),
+                              class VARCHAR(255),
+                              spellcaster INT,
+                              hit_points INT,
+                              ab_con INT,
+                              ab_dex INT,
+                              ab_str INT,
+                              ab_cha INT,
+                              ab_int INT,
+                              ab_wis INT
+                            )";
+                        
+                        //register the string as a command and execute it
+                        command = new SqliteCommand(character_tbl_sql, db_conn);
+                        command.ExecuteNonQuery();
+                    }
+
+                    db_conn.Close();
                 }
+            }
+            catch (IOException io_e)
+            {
+                Environment.Exit(1);
             }
             catch (SqliteException sql_e)
             {
-                //Exception handling here
+                Environment.Exit(1);
             }
+        }
+
+        /*
+         * Purpose: Checks to see if a database already has a table of the input name
+         * Params: db_conn - SqliteConnection
+         * Params: table_name - string
+         * Return: whether or not the table_name table exists in database connected to by db_conn
+         */
+        private static bool check_table(SqliteConnection db_conn, string table_name)
+        {
+            string tbl_q;
+            int row_count = 0;
+            SqliteCommand command = null;
+
+            try
+            {
+                /*Selecting the amount of tables in the sqlite_master table with table_name as a name
+                The usage of sqlite_master is due to every database containing an sqlite_master that
+                contains schema information*/
+                tbl_q = "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = @name";
+                
+                command = new SqliteCommand(tbl_q, db_conn);
+                command.Parameters.Add(new SqliteParameter("name", table_name));
+                
+                //Execute the command and return a single value; the number of tables
+                row_count = Convert.ToInt32(command.ExecuteScalar());
+            }
+            catch (SqliteException sql_e)
+            {
+                /*Because the function is part of the initialization process, if something goes wrong just quit*/
+                Environment.Exit(1);
+            }
+            
+            return (row_count == 1);
         }
     }
 }

@@ -1,6 +1,7 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnDAssignment", "DnDAssignment.csproj", "{52872B6B-D83E-46C2-9E00-ECA75FCDE5D4}"
 EndProject
 Global
@@ -13,5 +14,11 @@ Global
 		{52872B6B-D83E-46C2-9E00-ECA75FCDE5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52872B6B-D83E-46C2-9E00-ECA75FCDE5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52872B6B-D83E-46C2-9E00-ECA75FCDE5D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BD890BD-8CE6-4050-99B2-6F83AF22CF6D}
 	EndGlobalSection
 EndGlobal
