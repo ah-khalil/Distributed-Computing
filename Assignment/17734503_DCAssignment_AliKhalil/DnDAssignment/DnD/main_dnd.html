@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="main_dnd.css">
+    <script type="application/javascript" src="main_dnd.js"></script>
+    <title>DnD Character Screen</title>
+</head>
+<body>
+    <input type="hidden" id="rbp-hdn" value="0">
+    <input type="hidden" id="current-character-json">
+    <input type="hidden" id="class-hit-dice-val-hdn" value="0" onchange="update_hp()">
+    
+    <div class="menu-container">
+        <div class="btn-container" id="create-menu-container">
+            <button id="create-menu-btn">
+                Create Character
+            </button>
+        </div>
+        <p class="or-p"><b> -- </b></p>
+        <div class="btn-container" id="view-all-menu-container">
+            <button id="view-all-menu-btn">
+                View All Characters
+            </button>
+        </div>
+        <p class="or-p"><b> -- </b></p>
+        <div class="btn-container" id="view-character-menu-container">
+            <label for="character-input-btn">
+                Character Name:
+            </label>
+            <input type="search" id="character-input-btn">
+            <button id="view-menu-btn">
+                View Character
+            </button>
+        </div>
+    </div>
+    <hr>
+    <div id="character-vc-container">
+        <table id="character-vc-container-table">
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p><b> Name: </b></p>
+                            </td>
+                            <td>
+                                <input type="text" id="character-name-inp">
+                            </td>
+                            <td>
+                                <p id="character-name-inp-err-msg" class="error-msg-text"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><b> Age: </b></p>
+                            </td>
+                            <td>
+                                <input type="number" id="character-age-inp">
+                            </td>
+                            <td>
+                                <p id="character-age-inp-err-msg" class="error-msg-text"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><b> Gender: </b></p>
+                            </td>
+                            <td>
+                                <input type="text" id="character-gender-inp">
+                            </td>
+                            <td>
+                                <p id="character-gender-inp-err-msg" class="error-msg-text"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><b> Biography: </b></p>
+                            </td>
+                            <td>
+                                <textarea rows="4" cols="50" id="character-biography-inp"></textarea>
+                            </td>
+                            <td>
+                                <p id="character-bio-inp-err-msg" class="error-msg-text"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><b> Level: </b></p>
+                            </td>
+                            <td>
+                                <input type="number" id="character-level-inp" value="0" onchange="update_hp()">
+                            </td>
+                            <td>
+                                <p id="character-level-inp-err-msg" class="error-msg-text"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><b> Race: </b></p>
+                            </td>
+                            <td>
+                                <select id="race-select" onchange="race_change()">
+                                    <option></option>
+                                </select>
+                            </td>
+                            <td>
+                                <p id="character-race-inp-err-msg" class="error-msg-text"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><b> Class: </b></p>
+                            </td>
+                            <td>
+                                <select id="class-select" onchange="class_change()">
+                                    <option></option>
+                                </select>
+                            </td>
+                            <td>
+                                <p id="character-class-inp-err-msg" class="error-msg-text"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><b> Spellcaster: </b></p>
+                            </td>
+                            <td>
+                                <input type="radio" name="spellcaster-radio" id="spellcaster-radio-true" value="True" disabled>
+                                <label for="spellcaster-radio-true">Yes</label>
+                                <input type="radio" name="spellcaster-radio" id="spellcaster-radio-false" value="False" disabled>
+                                <label for="spellcaster-radio-false">No</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><b> Hit Points: </b></p>
+                            </td>
+                            <td>
+                                <input type="number" id="hit-points-num" value="0" disabled>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table id="ability-score-val-tbl-container">
+                        <tr>
+                            <td>
+                                <p><b> Ability Scores: </b></p>
+                            </td>
+                            <td>
+                                <table id="ability-score-val-tbl">
+                                    <!--<tr>-->
+                                        <!--<td><p><i> Constitution: </i></p></td>-->
+                                        <!--<td><input type="number" id="constt-rbp-val" value="0" onchange="update_hp()"></td>-->
+                                        <!--<td><p class="racial-bonus-p"></p></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td><p><i> Dexterity: </i></p></td>-->
+                                        <!--<td><input type="number" id="dext-rbp-val" value="0"></td>-->
+                                        <!--<td><p class="racial-bonus-p"></p></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td><p><i> Strength: </i></p></td>-->
+                                        <!--<td><input type="number" id="str-rbp-val" value="0"></td>-->
+                                        <!--<td><p class="racial-bonus-p"></p></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td><p><i> Charisma: </i></p></td>-->
+                                        <!--<td><input type="number" id="chsm-rbp-val" value="0"></td>-->
+                                        <!--<td><p class="racial-bonus-p"></p></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td><p><i> Intelligence: </i></p></td>-->
+                                        <!--<td><input type="number" id="int-rbp-val" value="0"></td>-->
+                                        <!--<td><p class="racial-bonus-p"></p></td>-->
+                                    <!--</tr>-->
+                                    <!--<tr>-->
+                                        <!--<td><p><i> Wisdom: </i></p></td>-->
+                                        <!--<td><input type="number" id="wis-rbp-val" value="0"></td>-->
+                                        <!--<td><p class="racial-bonus-p"></p></td>-->
+                                    <!--</tr>-->
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <div id="action-btn-container">
+                                    <button id="action-btn"></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="delete-btn-container">
+                                    <button id="delete-btn">
+                                        Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="create-xml-btn-container">
+                                    <button id="create-xml-btn">
+                                        Download XML
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="download-link-container">
+                                    <a id="download-link-a"></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="character-list-container">
+        <table id="character-list-tbl">
+            <thead id="character-list-head-container">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Race</th>
+                    <th>Class</th>
+                    <th>Level</th>
+                </tr>
+            </thead>
+            <tbody id="character-list-body-container">
+                
+            </tbody>
+        </table>
+    </div>
+    <div id="character-delete-container">
+        
+    </div>
+    <hr>
+    <!--<div class="menu-container">-->
+        <!--<div class="btn-container" >-->
+            <!--<button id="submit-btn" disabled>-->
+                <!--Submit-->
+            <!--</button>-->
+        <!--</div>-->
+        <!--<p class="or-p"><b> &#45;&#45; </b></p>-->
+        <!--<div class="btn-container" id="delete-container">-->
+            <!--<button id="delete-btn" disabled>-->
+                <!--Delete-->
+            <!--</button>-->
+        <!--</div>-->
+        <!--<p class="or-p"><b> &#45;&#45; </b></p>-->
+        <!--<div class="btn-container" id="create-xml-container">-->
+            <!--<button id="create-xml-btn" disabled>-->
+                <!--Create XML File-->
+            <!--</button>-->
+        <!--</div>-->
+    <!--</div>-->
+</body>
+</html>

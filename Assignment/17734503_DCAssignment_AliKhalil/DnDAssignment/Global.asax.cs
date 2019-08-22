@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Http;
 
-namespace TMWeb
+namespace DnDAssignment
 {
     public class Global : HttpApplication
     {
